@@ -9,20 +9,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewProject1">
 
+        <!-- Login Activity (Launcher Screen) -->
         <activity
-            android:name=".MainActivity2"
-            android:exported="false" />
-
-        <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+
+        <!-- Main Game Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
+        <!-- Win/Loss Result Activity -->
+        <activity
+            android:name=".MainActivity2"
+            android:exported="false" />
 
     </application>
 

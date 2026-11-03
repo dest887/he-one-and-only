@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText editNum;
 
     private Button btnSend;
-
     private Spinner spinnerDifficulty;
 
     private GuessGame game;

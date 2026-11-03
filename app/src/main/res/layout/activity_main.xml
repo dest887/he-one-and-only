@@ -2,15 +2,17 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="24dp"
-        android:gravity="center_horizontal">
+        android:padding="24dp">
 
+        <!-- App Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,11 +23,12 @@
             android:textSize="28sp"
             android:textStyle="bold" />
 
+        <!-- Score & Timer -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/txtScore"
@@ -51,6 +54,7 @@
 
         </LinearLayout>
 
+        <!-- Attempts -->
         <TextView
             android:id="@+id/txtAttempts"
             android:layout_width="match_parent"
@@ -62,6 +66,7 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <!-- Name Input -->
         <EditText
             android:id="@+id/editName"
             android:layout_width="match_parent"
@@ -75,6 +80,7 @@
             android:textColorHint="#A0AEC0"
             android:textSize="18sp" />
 
+        <!-- Difficulty Spinner -->
         <Spinner
             android:id="@+id/spinnerDifficulty"
             android:layout_width="match_parent"
@@ -82,6 +88,7 @@
             android:layout_marginBottom="16dp"
             android:minHeight="48dp" />
 
+        <!-- Guess Input -->
         <EditText
             android:id="@+id/editNum"
             android:layout_width="match_parent"
@@ -96,6 +103,7 @@
             android:textColorHint="#A0AEC0"
             android:textSize="18sp" />
 
+        <!-- Start Game Button -->
         <Button
             android:id="@+id/btnSend"
             android:layout_width="match_parent"
@@ -106,6 +114,7 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
+        <!-- Info Text -->
         <TextView
             android:id="@+id/txtInfo"
             android:layout_width="match_parent"
