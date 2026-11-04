@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:text="User Profile"
+            android:textColor="#1A202C"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <!-- Profile Picture Preview -->
+        <ImageView
+            android:id="@+id/imgProfile"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginBottom="16dp"
+            android:background="#E2E8F0"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_camera" />
+
+        <!-- Gallery Button -->
+        <Button
+            android:id="@+id/btnGallery"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="#3182CE"
+            android:text="Pick from Gallery"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <!-- Camera Button -->
+        <Button
+            android:id="@+id/btnCamera"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="#D69E2E"
+            android:text="Take Photo with Camera"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <!-- User Details Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="#F7FAFC"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/txtProfileUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Username: -"
+                android:textColor="#2D3748"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtProfileEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email: -"
+                android:textColor="#2D3748"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- Back to Game Button -->
+        <Button
+            android:id="@+id/btnBackToGame"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:backgroundTint="#48BB78"
+            android:text="Back to Game"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</ScrollView>

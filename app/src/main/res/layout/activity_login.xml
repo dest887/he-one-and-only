@@ -22,6 +22,20 @@
             android:textSize="28sp"
             android:textStyle="bold" />
 
+        <!-- Username Field -->
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:hint="Username (Required for Register)"
+            android:inputType="textPersonName"
+            android:paddingHorizontal="16dp"
+            android:textAlignment="center"
+            android:textColor="#1A202C"
+            android:textColorHint="#A0AEC0"
+            android:textSize="16sp" />
+
         <EditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"

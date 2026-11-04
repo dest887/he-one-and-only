@@ -8,27 +8,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewProject1">
-
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
         <!-- Login Activity (Launcher Screen) -->
         <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Main Game Activity -->
+        </activity> <!-- Main Game Activity -->
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
-
-        <!-- Win/Loss Result Activity -->
+            android:exported="false" /> <!-- Win/Loss Result Activity -->
         <activity
             android:name=".MainActivity2"
             android:exported="false" />
-
     </application>
 
 </manifest>

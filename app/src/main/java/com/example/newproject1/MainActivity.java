@@ -15,6 +15,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView txtScore;
@@ -22,10 +25,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView txtAttempts;
     private TextView txtInfo;
 
-    private EditText editName;
     private EditText editNum;
 
-    private Button btnSend;
+    private Button btnSend, btnLogout, btnProfile;
     private Spinner spinnerDifficulty;
 
     private GuessGame game;
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences preferences;
 
-    private String playerName;
+    private String playerName = "Player";
     private int score = 0;
     private boolean gameStarted = false;
 
@@ -47,10 +49,11 @@ public class MainActivity extends AppCompatActivity {
         txtAttempts = findViewById(R.id.txtAttempts);
         txtInfo = findViewById(R.id.txtInfo);
 
-        editName = findViewById(R.id.editName);
         editNum = findViewById(R.id.editNum);
 
         btnSend = findViewById(R.id.btnSend);
+        btnLogout = findViewById(R.id.btnLogout);
+        btnProfile = findViewById(R.id.btnProfile);
         spinnerDifficulty = findViewById(R.id.spinnerDifficulty);
 
         preferences = getSharedPreferences("GamePrefs", MODE_PRIVATE);
@@ -58,20 +61,41 @@ public class MainActivity extends AppCompatActivity {
         score = getIntent().getIntExtra("score", 0);
         txtScore.setText("Score: " + score);
 
-        playerName = preferences.getString("playerName", "");
-
-        if (!playerName.isEmpty()) {
-            editName.setText(playerName);
+        // Fetch user name from Firebase Auth or SharedPreferences automatically
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null && currentUser.getDisplayName() != null) {
+            playerName = currentUser.getDisplayName();
+        } else {
+            playerName = preferences.getString("playerName", "Player");
         }
 
         setupDifficultySpinner();
-
         editNum.setEnabled(false);
 
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 handleButtonClick();
+            }
+        });
+
+        // Open Profile Activity
+        btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Logout Button functionality
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -90,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
         );
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinnerDifficulty.setAdapter(adapter);
     }
 
@@ -114,33 +137,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startGame() {
-        playerName = editName.getText().toString().trim();
-
-        if (playerName.isEmpty()) {
-            txtInfo.setText("Enter your name");
-            return;
-        }
-
-        preferences.edit()
-                .putString("playerName", playerName)
-                .apply();
-
         GuessGame.Difficulty difficulty = getSelectedDifficulty();
-
         game = new GuessGame(difficulty);
-
         gameStarted = true;
 
-        editName.setEnabled(false);
         spinnerDifficulty.setEnabled(false);
         editNum.setEnabled(true);
 
         btnSend.setText("Submit");
-
         updateAttempts();
-
         txtInfo.setText("Guess the number!");
-
         startTimer();
 
         editNum.requestFocus();
@@ -155,7 +161,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         int guess;
-
         try {
             guess = Integer.parseInt(input);
         } catch (NumberFormatException e) {
@@ -165,9 +170,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         String result = game.makeGuess(guess);
-
         updateAttempts();
-
         editNum.setText("");
 
         if (result.startsWith("Correct")) {
@@ -176,7 +179,6 @@ public class MainActivity extends AppCompatActivity {
             txtInfo.setText(result + " (+1 pt)");
             saveHighScore();
             endRoundWithDelay(result, true);
-
         } else if (game.isGameOver()) {
             txtInfo.setText(result);
             saveHighScore();
@@ -190,7 +192,6 @@ public class MainActivity extends AppCompatActivity {
         if (game == null) {
             return;
         }
-
         txtAttempts.setText("Attempts: " + game.getRemainingAttempts());
     }
 
@@ -202,7 +203,6 @@ public class MainActivity extends AppCompatActivity {
         long time = game.getCurrentDifficulty().getTimeSeconds() * 1000L;
 
         countDownTimer = new CountDownTimer(time, 1000) {
-
             @Override
             public void onTick(long millisUntilFinished) {
                 txtTimer.setText("Time: " + (millisUntilFinished / 1000) + "s");
@@ -249,7 +249,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void saveHighScore() {
         int highestScore = preferences.getInt("highestScore", 0);
-
         if (score > highestScore) {
             preferences.edit()
                     .putInt("highestScore", score)
