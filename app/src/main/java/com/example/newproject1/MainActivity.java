@@ -12,11 +12,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
 
     private SharedPreferences preferences;
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
 
     private String playerName = "Player";
     private int score = 0;
@@ -43,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         txtScore = findViewById(R.id.txtScore);
         txtTimer = findViewById(R.id.txtTimer);
@@ -62,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         txtScore.setText("Score: " + score);
 
         // Fetch user name from Firebase Auth or SharedPreferences automatically
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null && currentUser.getDisplayName() != null) {
             playerName = currentUser.getDisplayName();
         } else {
@@ -92,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
+                mAuth.signOut();
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
@@ -178,10 +189,12 @@ public class MainActivity extends AppCompatActivity {
             txtScore.setText("Score: " + score);
             txtInfo.setText(result + " (+1 pt)");
             saveHighScore();
+            saveScoreToHistory(); // <-- Records score history to Firestore!
             endRoundWithDelay(result, true);
         } else if (game.isGameOver()) {
             txtInfo.setText(result);
             saveHighScore();
+            saveScoreToHistory(); // <-- Records score history to Firestore on game over!
             endRoundWithDelay(result, false);
         } else {
             txtInfo.setText(result);
@@ -216,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
                     txtInfo.setText("Time is up!");
                     updateAttempts();
                     saveHighScore();
+                    saveScoreToHistory(); // <-- Records score history to Firestore when time runs out!
                     endRoundWithDelay("Time is up!", false);
                 }
             }
@@ -255,6 +269,31 @@ public class MainActivity extends AppCompatActivity {
                     .putString("highestScoreName", playerName)
                     .apply();
         }
+    }
+
+    /**
+     * Creates a separate top-level 'scores' section in Firestore
+     * containing the score history log for the current user.
+     */
+    private void saveScoreToHistory() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) return;
+
+        Map<String, Object> scoreData = new HashMap<>();
+        scoreData.put("userId", currentUser.getUid());
+        scoreData.put("userName", playerName);
+        scoreData.put("score", score);
+        scoreData.put("timestamp", Timestamp.now());
+
+        // This creates/appends to the top-level "scores" collection next to "users" in your console
+        db.collection("scores")
+                .add(scoreData)
+                .addOnSuccessListener(documentReference -> {
+                    // Successfully logged to Firestore scores history
+                })
+                .addOnFailureListener(e -> {
+                    // Handle failure silently or with a toast if needed
+                });
     }
 
     @Override

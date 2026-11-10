@@ -22,7 +22,6 @@
             android:textSize="28sp"
             android:textStyle="bold" />
 
-        <!-- Username Field -->
         <EditText
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
@@ -76,9 +75,21 @@
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
             android:backgroundTint="#48BB78"
             android:text="Register"
             android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:text="Forgot Password?"
+            android:textColor="#3182CE"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
     </LinearLayout>

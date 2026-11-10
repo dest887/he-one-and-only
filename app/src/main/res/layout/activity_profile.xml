@@ -16,75 +16,129 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="16dp"
             android:text="User Profile"
             android:textColor="#1A202C"
             android:textSize="26sp"
             android:textStyle="bold" />
 
-        <!-- Profile Picture Preview -->
         <ImageView
             android:id="@+id/imgProfile"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_marginBottom="16dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="12dp"
             android:background="#E2E8F0"
             android:scaleType="centerCrop"
             android:src="@android:drawable/ic_menu_camera" />
 
-        <!-- Gallery Button -->
-        <Button
-            android:id="@+id/btnGallery"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginBottom="12dp"
-            android:backgroundTint="#3182CE"
-            android:text="Pick from Gallery"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <!-- Camera Button -->
-        <Button
-            android:id="@+id/btnCamera"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginBottom="20dp"
-            android:backgroundTint="#D69E2E"
-            android:text="Take Photo with Camera"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <!-- User Details Card -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/btnGallery"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="48dp"
+                android:layout_marginEnd="6dp"
+                android:backgroundTint="#3182CE"
+                android:text="Gallery"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnCamera"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="48dp"
+                android:layout_marginStart="6dp"
+                android:backgroundTint="#D69E2E"
+                android:text="Camera"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:background="#F7FAFC"
             android:orientation="vertical"
             android:padding="16dp">
 
             <TextView
-                android:id="@+id/txtProfileUsername"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Username: -"
-                android:textColor="#2D3748"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-            <TextView
                 android:id="@+id/txtProfileEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
                 android:text="Email: -"
-                android:textColor="#2D3748"
-                android:textSize="15sp"
+                android:textColor="#4A5568"
+                android:textSize="14sp"
                 android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etProfileName"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="10dp"
+                android:background="#FFFFFF"
+                android:hint="Full Name"
+                android:inputType="textPersonName"
+                android:paddingHorizontal="12dp"
+                android:textColor="#1A202C"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/etProfilePhone"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="10dp"
+                android:background="#FFFFFF"
+                android:hint="Phone Number"
+                android:inputType="phone"
+                android:paddingHorizontal="12dp"
+                android:textColor="#1A202C"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/etProfileCity"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="10dp"
+                android:background="#FFFFFF"
+                android:hint="City"
+                android:inputType="textPostalAddress"
+                android:paddingHorizontal="12dp"
+                android:textColor="#1A202C"
+                android:textSize="14sp" />
+
+            <!-- Password displayed as plain text so it shows up visibly like 24820 and is fully editable -->
+            <EditText
+                android:id="@+id/etProfilePassword"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="#FFFFFF"
+                android:hint="Password"
+                android:inputType="text"
+                android:paddingHorizontal="12dp"
+                android:textColor="#1A202C"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
-        <!-- Back to Game Button -->
+        <Button
+            android:id="@+id/btnSaveProfile"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="#3182CE"
+            android:text="Save Changes"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
         <Button
             android:id="@+id/btnBackToGame"
             android:layout_width="match_parent"
